@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Select from 'react-select'
 import { useNavigate } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 export default function Home() {
 
   const [group, setGroup] = useState([]);
@@ -14,7 +15,9 @@ export default function Home() {
   const steps = [];
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
+  const [myArray, setMyArray] = useState([])
   const [sonum, setSonum] = useState([]);
+
 
   group.forEach((value) => {
     options.push({
@@ -22,16 +25,15 @@ export default function Home() {
       label: value.groupnam,
     });
   });
-
   
   const handleTypeSelect = (e) => {
     setSelectedOption(e.value);
-    
-    
     axios.get("http://k2mpg.ddns.net/napapi/api/goodsdetail",{ params: {group:e.value}}).then((response) => {
       setProduct(response.data.data.product);
     });
   };
+
+
 
   function clearData(){
     this.setState({
@@ -39,56 +41,45 @@ export default function Home() {
     })
   }
 
-  async function fetchSonum() {
-    
-    axios.get("http://k2mpg.ddns.net/napapi/api/sonum").then(function(response) {        
-        console.log("sonum L :"+response.data.data.sonum);
+
+  async function fetchData() {
+    axios.post("http://k2mpg.ddns.net/napapi/api/oesohd").then(function(response) {
+      console.log("sonum "+response.data.data.sonum);
         setSonum(response.data.data.sonum);
-    }); 
-  }
-
-
-  async function fetchGroup() {
-   
-       axios.get("http://k2mpg.ddns.net/napapi/api/group").then((response) => {
-        setGroup(response.data.group);
-      });    
+      }); 
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    const {txtcnt } = event.target.elements;
-    const {txtcode } = event.target.elements;
-
-    var params = {
-      sonum:sonum
-    }
-
-    console.log("sonum M :"+sonum);
-
-    axios.post("http://k2mpg.ddns.net/napapi/api/oesohd",params).then(function(response) {
-      console.log(response.data);
-    }); 
+    const {tcnt} = event.target.elements;
+    const {tcode} = event.target.elements;
     
-    console.log("sonum N :"+sonum);
 
-    for (var i = 0, l = txtcnt.length; i < l; i++) {
+    //fetchData();
+   
+     console.log("sonum L :"+sonum);
+
+
+  
+
+    for (var i = 0, l = tcnt.length; i < l; i++) {
     
-      if(txtcnt[i].value!=""){
+      if(tcnt[i].value!=""){
       var params = {
-        code:txtcode[i].value,
-        cnt:txtcnt[i].value,
+        code:tcode[i].value,
+        cnt:tcnt[i].value,
         sonum:sonum
       }
-      txtcnt[i].value="";
+      tcnt[i].value="";
       axios.post("http://k2mpg.ddns.net/napapi/api/oesoln", params).then(function(response) {
         console.log(response.data);
       });    
       }
-    }   
-    alert("เพิ่มข้อมูลสำเร็จ");
-    fetchSonum();
+    }
+   
+    //alert("เพิ่มข้อมูลสำเร็จ");
+    //<input type="text" id="txtcnt"  onChange={(e) => {handleCount(e, val.stkcod);}} className={elstyles.textbox} />
   };
 
   product.map((val, key) => {
@@ -101,11 +92,13 @@ export default function Home() {
       </div>);
   });
 
-  
-useEffect(() => {
-      fetchGroup();
-      fetchSonum();
-}, []);
+  useEffect(() => {
+      axios.get("http://k2mpg.ddns.net/napapi/api/group").then((response) => {
+        setGroup(response.data.group);
+      });
+
+      fetchData();
+  }, []);
 
   return (<Layout>
     <div className={styles.widgetbox}>

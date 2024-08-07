@@ -46,12 +46,12 @@
   }
   
   .headernav {
-    min-height: 42px;
+    min-height: 55px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #279BE4;
-  
+    /*background:#f68b33; */
+    background:#f68b33;
   }
   
   .menu-button {
@@ -66,7 +66,7 @@
   .nav ul li {
     float: left;
     position: relative;
-    padding: 11px;
+    padding: 1em;
   }
   .nav > ul > li:first-child {
     border-left: none;
@@ -75,12 +75,13 @@
     color: #fff;
     padding: 1px;
     float: right;
+    font-size: 14pt;
   }
   .nav ul li i {
     color: #fff;
   }
   .nav ul li:hover {
-    background: #01A9F0;
+    background: #99510e;
     color: #fff;
   }
   .user-profile {
@@ -241,8 +242,8 @@
   .content {
     float: left;
     background: #E9EEF4;
-    width: 85%;
-    height:100vh;
+    width: 100%;
+    height:100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -299,8 +300,8 @@
   }
 
   .widgetcontent{
-    padding:2rem;
-    min-height: 500vh;
+    padding:1rem;
+    min-height:00vh;
   }
 
   .right{

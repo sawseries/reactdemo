@@ -1,5 +1,12 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.widgetcontent{
+  background-color: white;
+  height: 100vh;
+  
+}
+
+
 .loginpage {
   width: 360px;
   padding: 8% 0 0;
@@ -13,7 +20,8 @@
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 0px 2px 0 rgba(0, 0, 0, 0.24);
+  border-top:30px solid #091f3d;
 }
 .form input {
   font-family: "Roboto", sans-serif;
@@ -30,7 +38,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #f68b33;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -41,7 +49,7 @@
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #99510e;
 }
 .form .message {
   margin: 15px 0 0;
@@ -87,7 +95,4 @@
 }
 .container .info span .fa {
   color: #EF3B3A;
-}
-body {
-   
 }

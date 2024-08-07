@@ -43,18 +43,16 @@ export default function Layout({ children }) {
 
       menu =  <ul className={styles.left}>
               <li className={styles.navsettings}>
-                <div className={styles.fonticon}><a href="/Home"><b>K2M ASSET</b></a></div>            
+                <div className={styles.fonticon}><a href="/Home"><b>รายการ Order PC:B-พัทยาเหนือ</b></a></div>            
               </li>
-              <li className={styles.navsettings}>
-                <div className={styles.fonticon}><a href="/Home"><b><FiHome/>ทรัพย์สิน</b></a></div>            
-              </li> 
+             
               </ul>         
    }else{
     sidebar = null;
     btnlogout = null;
     menu =  <ul className={styles.left}>
             <li className={styles.navsettings}>
-            <div className={styles.fonticon}><a href="/Home"><b>K2M ASSET</b></a></div>            
+            <div className={styles.fonticon}><a href="/"><b>รายการ Order PC:B-พัทยาเหนือ</b></a></div>            
             </li>
             </ul>
   }
@@ -70,7 +68,7 @@ export default function Layout({ children }) {
       </div>
     </div>
     </div>   
-    {sidebar}
+ 
   <div className={styles.content}>
       {children}        
   </div>

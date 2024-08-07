@@ -75,4 +75,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### npm install classnames
 ### npm install --save react-router-dom
 ### npm install react-router-dom@5.2.0
-
+npm install react-select
