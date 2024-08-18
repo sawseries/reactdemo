@@ -119,6 +119,40 @@
     text-align:center;
 }
 
+
+.customStyles{
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%; /* Could be more or less, depending on screen size */
+  min-height:340px;
+}
+
+.table{
+    width:100%;
+    border:1px solid gray;
+}
+
+.table td{
+    padding:1em;
+}
+
+
+.text_right{
+    text-align:right;
+}
+
+
+.box{
+    width:100px;
+    height:100px;
+    padding:1em;
+    border:1px solid gray;
+    float:left;
+    text-align:center;
+}
+
 @media (max-width: 920px) {
 
        

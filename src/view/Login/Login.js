@@ -26,7 +26,6 @@ export default function Login() {
 
 
   const checklogin = async (data) => {
-    //alert(data);
     const headers = {
       'Content-Type': 'application/json',
       //'Authorization': '',
@@ -36,7 +35,8 @@ export default function Login() {
 
       let found = await axios({ 
         method: 'post',
-        url: 'http://k2mpg.ddns.net/napapi/api/login',
+        //url: 'http://localhost/napapi/api/login',
+        url: 'http://localhost:5000/trd/login',
         data: data,
         headers: headers,
         })
@@ -44,10 +44,11 @@ export default function Login() {
           return error
         })
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           return response.data;
-
-        });            
+        });  
+        
+        console.log(found.success);
         if(found.success==true){
           sessionStorage.setItem('auth', true);  
           navigate('/Home');

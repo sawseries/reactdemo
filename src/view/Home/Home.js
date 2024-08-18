@@ -5,6 +5,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Select from 'react-select'
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+
+
 export default function Home() {
 
   const [group, setGroup] = useState([]);
@@ -15,6 +18,33 @@ export default function Home() {
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   const [sonum, setSonum] = useState([]);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalPlanogram, setPlanogram] = React.useState(false);
+  let subtitle;
+ 
+
+  function openModal(id) {
+   
+    if(id==1){
+      setIsOpen(true);
+    }else if(id==2){
+      setPlanogram(true); 
+    }
+  }
+
+  function afterOpenModal() {
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModal(id) {
+    
+    if(id==1){
+    setIsOpen(false);
+    }else if(id==2){
+      setPlanogram(false); 
+    }
+  }
+
 
   group.forEach((value) => {
     options.push({
@@ -23,12 +53,11 @@ export default function Home() {
     });
   });
 
-  
+
   const handleTypeSelect = (e) => {
     setSelectedOption(e.value);
     
-    
-    axios.get("http://k2mpg.ddns.net/napapi/api/goodsdetail",{ params: {group:e.value}}).then((response) => {
+    axios.get("http://localhost/napapi/api/goodsdetail",{ params: {group:e.value}}).then((response) => {
       setProduct(response.data.data.product);
     });
   };
@@ -41,16 +70,16 @@ export default function Home() {
 
   async function fetchSonum() {
     
-    axios.get("http://k2mpg.ddns.net/napapi/api/sonum").then(function(response) {        
+    axios.get("http://localhost/napapi/api/sonum").then(function(response) {        
         console.log("sonum L :"+response.data.data.sonum);
         setSonum(response.data.data.sonum);
     }); 
   }
 
 
+
   async function fetchGroup() {
-   
-       axios.get("http://k2mpg.ddns.net/napapi/api/group").then((response) => {
+       axios.get("http://localhost/napapi/api/group").then((response) => {
         setGroup(response.data.group);
       });    
   }
@@ -67,7 +96,7 @@ export default function Home() {
 
     console.log("sonum M :"+sonum);
 
-    axios.post("http://k2mpg.ddns.net/napapi/api/oesohd",params).then(function(response) {
+    axios.post("http://localhost/napapi/api/oesohd",params).then(function(response) {
       console.log(response.data);
     }); 
     
@@ -82,7 +111,7 @@ export default function Home() {
         sonum:sonum
       }
       txtcnt[i].value="";
-      axios.post("http://k2mpg.ddns.net/napapi/api/oesoln", params).then(function(response) {
+      axios.post("http://localhost/napapi/api/oesoln", params).then(function(response) {
         console.log(response.data);
       });    
       }
@@ -93,7 +122,7 @@ export default function Home() {
 
   product.map((val, key) => {
     steps.push(<div className={elstyles.searchcontainner}>
-      <div className={elstyles.s1}>{val.stkdes}<br /></div>
+      <div className={elstyles.s1}><a onClick={() => openModal(1)}>{val.stkdes}</a><br /></div>
       <div className={elstyles.s2}>
       <input type="text" id="txtcode" value={val.stkcod} className={elstyles.textbox} hidden/>
       <input type="number" id="txtcnt" name="txtcnt"  className={elstyles.textbox} />
@@ -105,11 +134,13 @@ export default function Home() {
 useEffect(() => {
       fetchGroup();
       fetchSonum();
+   
 }, []);
 
   return (<Layout>
-    <div className={styles.widgetbox}>
-      <div className={styles.widgetcontent}>        
+    <div className={styles.widgetbox}> 
+      <div className={styles.widgetcontent}> 
+      <button onClick={() => openModal(2)}>Open Modal</button> 
       <div className={elstyles.head2}><b>Lotus - จรัญสนิทวงศ์</b></div>
          <form onSubmit={handleSubmit}>
           <div className={elstyles.head1}> 
@@ -121,7 +152,6 @@ useEffect(() => {
           defaultValue={{ label: "--ค้นหาจากหมวด--", value: "" }}
           label="Single select" className={elstyles.selectctl}/>
           </div>
-
         <div className={elstyles.card3}>
         <div className={elstyles.searchheader}>
         <div className={elstyles.s1}><b>รายการพืช</b></div>
@@ -129,7 +159,7 @@ useEffect(() => {
         </div>
         </div>
         <div className={elstyles.card1}>
-      {steps}
+         {steps}
         </div>
         <div className={elstyles.card2}>
           <div className={elstyles.searchdetail}>
@@ -142,6 +172,42 @@ useEffect(() => {
           </div>
         </div>
         </form>
+
+        <Modal isOpen={modalPlanogram}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={() => closeModal(1)}
+        className={elstyles.customStyles}
+        contentLabel="Example Modal">
+        <table className={elstyles.table}>
+          <tr>
+            <td><h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2></td>
+            <td className={elstyles.text_right}><button onClick={() => closeModal(2)}>close</button></td>
+          </tr>
+        </table>
+                
+        <form>
+         {group.map(val => (<div className={elstyles.box}>{val.groupnam}</div>))}
+        </form>
+       </Modal> 
+
+
+       <Modal isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        className={elstyles.customStyles}
+        contentLabel="Example Modal">
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+        <button onClick={() => closeModal(1)}>close</button>
+        <div>I am a modal2</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+       </Modal> 
+
       </div>
     </div>
   </Layout>);
